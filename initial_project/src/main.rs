@@ -1,13 +1,21 @@
-#![allow(unused)]
+use bindings::{
+    Windows::Foundation::Uri,
+    Windows::Web::Syndication::SyndicationClient,
+    Windows::Win32::UI::WindowsAndMessaging::{MessageBoxA, MB_OK},
+};
 
+fn main() -> windows::Result<()>{
+    let uri = Uri::CreateUri("https://kennykerr.ca/feed")?;
+    let client = SyndicationClient::new()?;
+    let feed = client.RetrieveFeedAsync(uri)?.get()?;
 
-use restaurant::{self, front_of_house::hosting};
+    for item in feed.Items()? {
+        println!("{}", item.Title()?.Text()?);
+    }
 
-fn main() {
-    let x = chrono::Utc::now();
-    println!("{}", x);
+    unsafe {
+        MessageBoxA(None, "My Content", "My Title", MB_OK);
+    }
 
-    hosting::add_to_waitlist();
-    restaurant::eat_at_restaurant();
-
+    Ok(())
 }
