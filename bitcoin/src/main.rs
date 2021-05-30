@@ -1,7 +1,10 @@
 // use std::fs::File;
+// use std::collections::HashMap;
+
 use reqwest::header::{CONTENT_TYPE, HeaderMap, HeaderValue};
 use serde::Deserialize;
 use serde_json::{json, Value};
+
 
 
 fn construct_headers() -> HeaderMap {
@@ -45,6 +48,10 @@ async fn main() -> Result<(), reqwest::Error> {
 
     match STATUS {
         "JSON" => {
+            let modified_res: Value = res.json().await?;
+            println!("{:#?}", modified_res);
+        },
+        "CUSTOM" => {
             let modified_res: GetRpc = res.json().await?;
             println!("{:#?}", modified_res);
         },
@@ -52,7 +59,7 @@ async fn main() -> Result<(), reqwest::Error> {
             let modified_res = res.text().await?;
             println!("{:#?}", modified_res);
         },
-        _ => panic!(),
+        _ => panic!()
     }
 
 
