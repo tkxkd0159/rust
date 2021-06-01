@@ -1,0 +1,712 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Rust</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, YuMincho, "Yu Mincho", "Hiragino Mincho ProN", "Hiragino Mincho Pro", "Songti TC", "Songti SC", "SimSun", "Nanum Myeongjo", NanumMyeongjo, Batang, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC', 'Noto Sans CJK KR'; }
+
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC', 'Noto Sans Mono CJK KR'; }
+
+.highlight-default {
+}
+.highlight-gray {
+	color: rgb(155,154,151);
+}
+.highlight-brown {
+	color: rgb(100,71,58);
+}
+.highlight-orange {
+	color: rgb(217,115,13);
+}
+.highlight-yellow {
+	color: rgb(223,171,1);
+}
+.highlight-teal {
+	color: rgb(15,123,108);
+}
+.highlight-blue {
+	color: rgb(11,110,153);
+}
+.highlight-purple {
+	color: rgb(105,64,165);
+}
+.highlight-pink {
+	color: rgb(173,26,114);
+}
+.highlight-red {
+	color: rgb(224,62,62);
+}
+.highlight-gray_background {
+	background: rgb(235,236,237);
+}
+.highlight-brown_background {
+	background: rgb(233,229,227);
+}
+.highlight-orange_background {
+	background: rgb(250,235,221);
+}
+.highlight-yellow_background {
+	background: rgb(251,243,219);
+}
+.highlight-teal_background {
+	background: rgb(221,237,234);
+}
+.highlight-blue_background {
+	background: rgb(221,235,241);
+}
+.highlight-purple_background {
+	background: rgb(234,228,242);
+}
+.highlight-pink_background {
+	background: rgb(244,223,235);
+}
+.highlight-red_background {
+	background: rgb(251,228,228);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(55, 53, 47, 0.6);
+	fill: rgba(55, 53, 47, 0.6);
+}
+.block-color-brown {
+	color: rgb(100,71,58);
+	fill: rgb(100,71,58);
+}
+.block-color-orange {
+	color: rgb(217,115,13);
+	fill: rgb(217,115,13);
+}
+.block-color-yellow {
+	color: rgb(223,171,1);
+	fill: rgb(223,171,1);
+}
+.block-color-teal {
+	color: rgb(15,123,108);
+	fill: rgb(15,123,108);
+}
+.block-color-blue {
+	color: rgb(11,110,153);
+	fill: rgb(11,110,153);
+}
+.block-color-purple {
+	color: rgb(105,64,165);
+	fill: rgb(105,64,165);
+}
+.block-color-pink {
+	color: rgb(173,26,114);
+	fill: rgb(173,26,114);
+}
+.block-color-red {
+	color: rgb(224,62,62);
+	fill: rgb(224,62,62);
+}
+.block-color-gray_background {
+	background: rgb(235,236,237);
+}
+.block-color-brown_background {
+	background: rgb(233,229,227);
+}
+.block-color-orange_background {
+	background: rgb(250,235,221);
+}
+.block-color-yellow_background {
+	background: rgb(251,243,219);
+}
+.block-color-teal_background {
+	background: rgb(221,237,234);
+}
+.block-color-blue_background {
+	background: rgb(221,235,241);
+}
+.block-color-purple_background {
+	background: rgb(234,228,242);
+}
+.block-color-pink_background {
+	background: rgb(244,223,235);
+}
+.block-color-red_background {
+	background: rgb(251,228,228);
+}
+.select-value-color-default { background-color: rgba(206,205,202,0.5); }
+.select-value-color-gray { background-color: rgba(155,154,151, 0.4); }
+.select-value-color-brown { background-color: rgba(140,46,0,0.2); }
+.select-value-color-orange { background-color: rgba(245,93,0,0.2); }
+.select-value-color-yellow { background-color: rgba(233,168,0,0.2); }
+.select-value-color-green { background-color: rgba(0,135,107,0.2); }
+.select-value-color-blue { background-color: rgba(0,120,223,0.2); }
+.select-value-color-purple { background-color: rgba(103,36,222,0.2); }
+.select-value-color-pink { background-color: rgba(221,0,129,0.2); }
+.select-value-color-red { background-color: rgba(255,0,26,0.2); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="05eba087-ea25-4b6a-b2a3-1ddfe1548560" class="page sans"><header><div class="page-header-icon undefined"><img class="icon" src="Rust%204b93dce58ec64d1ca7714b5d6174d638/rust.png"/></div><h1 class="page-title">Rust</h1></header><div class="page-body"><p id="d0298b25-a8e6-42d2-9b2c-77bb8f62f198" class=""><em>Rust</em> is primarily an expression language. This means that most forms of <strong>value-producing</strong> or <strong>effect-causing evaluation</strong> are directed by <strong>the uniform syntax category of expressions.</strong></p><nav id="5c6dbea2-1aeb-4120-9340-23969ba7640d" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8e8df341-6942-44aa-ad05-082ee224ef8e">Setting</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#5919346b-d68f-4618-a4d6-4ecce00c67c0">1) dependency 관리</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#00976a6c-c340-4de3-95dd-8483a7d5f444">※ Cargo.toml</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#a41fc17a-d4e2-4001-bbe9-8ae94b48d393">2) Manage a package &amp; modules</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8d925248-815b-41ee-9d52-4d76692f2ede">Style guide</a></div></nav><hr id="b7e444fa-bab6-4583-86d3-444ae4a199a1"/><figure id="901841f8-59f6-452f-a61a-acf378d77807" class="link-to-page"><a href="Rust%204b93dce58ec64d1ca7714b5d6174d638/Attributes%20901841f859f6452fa61aacf378d77807.html">Attributes</a></figure><figure id="839a2f45-fa06-48c8-8e43-e01b286c2515" class="link-to-page"><a href="Rust%204b93dce58ec64d1ca7714b5d6174d638/Keywords%20839a2f45fa0648c88e43e01b286c2515.html">Keywords</a></figure><figure id="cd3f7bd0-0733-4e48-9bd1-db930cc788fa" class="link-to-page"><a href="Rust%204b93dce58ec64d1ca7714b5d6174d638/Control%20Flow%20cd3f7bd007334e489bd1db930cc788fa.html">Control Flow</a></figure><figure id="881d3a0f-bc08-41ee-b080-69f23c04017f" class="link-to-page"><a href="Rust%204b93dce58ec64d1ca7714b5d6174d638/Generics,%20Trait,%20Lifetime%20881d3a0fbc0841eeb08069f23c04017f.html">Generics, Trait, Lifetime</a></figure><figure id="c90c030d-bc7d-488a-ab27-b06336e25a47" class="link-to-page"><a href="Rust%204b93dce58ec64d1ca7714b5d6174d638/Method%20Syntax%20c90c030dbc7d488aab27b06336e25a47.html">Method Syntax</a></figure><figure id="20eeb0f8-27ed-4bcd-98c2-c329963f840f" class="link-to-page"><a href="Rust%204b93dce58ec64d1ca7714b5d6174d638/Ownership%2020eeb0f827ed4bcd98c2c329963f840f.html">Ownership</a></figure><figure id="66eae80b-1eaf-489d-b825-ac13ebb27ba4" class="link-to-page"><a href="Rust%204b93dce58ec64d1ca7714b5d6174d638/String%20formatting%2066eae80b1eaf489db825ac13ebb27ba4.html">String formatting</a></figure><figure id="45e0f5d4-047f-44b1-b777-0edb40b206a4" class="link-to-page"><a href="Rust%204b93dce58ec64d1ca7714b5d6174d638/Items%2045e0f5d4047f44b1b7770edb40b206a4.html">Items</a></figure><hr id="f682ed16-5eff-4474-9a8d-92a801e7c132"/><p id="6690baf0-8d7d-42a5-a24e-302ea3caecd1" class=""><code>#[allow(dead_code)]</code> : 사용하지 않는 함수, enum 등에 대한 컴파일러 경고 없애기 위해 사용</p><div id="efff3674-5b67-4d48-aa73-13392469bb85" class="column-list"><div id="d9d0726e-6291-49fd-b36c-4317f7a3b472" style="width:50%" class="column"><figure id="4b93dce5-8ec6-4d1c-a771-4b5d6174d638" class="image"><a href="Rust%204b93dce58ec64d1ca7714b5d6174d638/Untitled.png"><img style="width:321px" src="Rust%204b93dce58ec64d1ca7714b5d6174d638/Untitled.png"/></a></figure></div><div id="a81048d7-1a41-4770-a986-649f5e070325" style="width:50%" class="column"><figure id="bb299e76-5427-4082-8ada-87f2b1e0789a" class="image"><a href="Rust%204b93dce58ec64d1ca7714b5d6174d638/Untitled%201.png"><img style="width:342px" src="Rust%204b93dce58ec64d1ca7714b5d6174d638/Untitled%201.png"/></a></figure></div></div><h1 id="8e8df341-6942-44aa-ad05-082ee224ef8e" class="">Setting</h1><pre id="fc86083e-074b-4410-b517-f7f5029f3595" class="code"><code>cargo init                 # 현재 디렉토리에서 프로젝트 생성
+cargo new &lt;project_name&gt;
+cargo new --lib &lt;my_lib_name&gt; 
+
+cargo check                # 컴파일 가능여부 확인
+cargo build  [--release]   # Build the local package and all of its dependencies
+cargo run                  # build + execution
+cargo clean                # Remove the entire target directory
+cargo build --all-targets  # --lib --bins --tests --benches --examples
+
+cargo update               # Update dependencies listed in Cargo.lock
+cargo build --locked       # 원래는 Cargo.toml 기준으로 dependency에 맞는 최신 버전
+                           # 패키지들을 받아옴. 이건 Cargo.lock을 기준으로
+                           # 해당 버전에 고정된 패키지들을 받아옴 (production 용)
+
+
+cargo doc [--no-deps] [-p &lt;target_1&gt;] [-p &lt;target_2&gt;] [...]</code></pre><p id="e29f3c78-c900-4585-9d7d-2684257dd988" class="">
+</p><p id="76be9ae4-f033-4908-89fd-af5d1b1932bd" class=""><code>cargo fix</code> : To read and apply the suggestions made by rustc</p><p id="6ac8a863-4e0a-42b9-b612-d741954bf9b0" class=""><code>cargo clippy</code> : A collection of lints to catch common mistakes</p><h2 id="5919346b-d68f-4618-a4d6-4ecce00c67c0" class="">1) dependency 관리</h2><p id="d5aa38c1-dd8f-41cb-92dc-18e5e1e1fa2f" class=""><em>crate</em> 는 rust의 compilation, linking 단위이다. 이것은 source code, binary executable, binary library 형태로 존재할 수 있다. Rust project는 <em>package</em>로 불리고 하나 이상의 crate가 포함될 수 있다. 이 때 프로젝트에 포함된 <code>Cargo.toml</code>에 어떻게 이 <em>crate</em>들이 빌드될 지 작성된다.
+<em>libary crate</em>는 다른 project에서 사용할 수 있도록 만든 컴포넌트의 그룹. 이것은 entry point(<code>fn main()</code>)를 포함하지 않음.</p><p id="2a444529-c65c-4046-b272-750c1c001fb5" class=""><code>rustup</code>은 rust toolchain의 installer/updater</p><p id="858f96f0-09dd-40b3-8715-b3e48ae71664" class=""><code>rustc</code>는 Rust의 compiler</p><p id="7285c700-df1e-4fec-bc0e-905e6ccce7a8" class=""><em>Cargo</em>는 Rust의 build system, package manager</p><p id="b92e27ab-f56f-43c9-a822-10ce0248e742" class=""><em>Crates.io</em>는 Rust community&#x27;s crate registry</p><p id="a5c7894b-917b-4559-8b02-f911f1205716" class="">The <code>Cargo.toml</code> file for each package is called its <em>manifest</em></p><pre id="74551bfc-b7e4-46ab-b5b6-6cc1c38a7e27" class="code"><code>rustup show
+rustup component list
+</code></pre><figure id="3bf5a986-ec63-439a-9330-8fddd7436024" class="image"><a href="Rust%204b93dce58ec64d1ca7714b5d6174d638/Untitled%202.png"><img style="width:882px" src="Rust%204b93dce58ec64d1ca7714b5d6174d638/Untitled%202.png"/></a></figure><h3 id="00976a6c-c340-4de3-95dd-8483a7d5f444" class="">※ Cargo.toml</h3><ul id="eaa3e258-688e-459a-a542-fce4c1eeb013" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/unstable.html"><code>cargo-features</code></a> — Unstable, nightly-only features.</li></ul><ul id="6dde8312-f2e2-4c61-82f9-3a53e0d93e32" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-package-section"><code>[package]</code></a> — Defines a package.<ul id="ac8e4371-1b87-4a9d-a3a6-a3a8caefa69e" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-name-field"><code>name</code></a> — The name of the package.</li></ul><ul id="d9e45fb0-72c3-490c-bbb3-87284e3e9255" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-version-field"><code>version</code></a> — The version of the package.</li></ul><ul id="d6fd9124-8e13-410d-b1f5-fe45876af5a3" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-authors-field"><code>authors</code></a> — The authors of the package.</li></ul><ul id="3dfe0fca-caea-4057-9017-ef5bd73b0e81" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-edition-field"><code>edition</code></a> — The Rust edition.</li></ul><ul id="0b637d41-014c-44e1-9321-0ffac831abe9" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-description-field"><code>description</code></a> — A description of the package.</li></ul><ul id="210116f1-fe25-4e60-8c0e-3245f0a5f662" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-documentation-field"><code>documentation</code></a> — URL of the package documentation.</li></ul><ul id="34f64007-7627-41cd-a86c-eae61ac7d414" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-readme-field"><code>readme</code></a> — Path to the package&#x27;s README file.</li></ul><ul id="3f340a5c-1898-4a64-b8b3-962cff1acf83" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-homepage-field"><code>homepage</code></a> — URL of the package homepage.</li></ul><ul id="2e516d67-d9e8-47c2-b462-508b0bd6c5c4" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-repository-field"><code>repository</code></a> — URL of the package source repository.</li></ul><ul id="2a2c866f-5fc1-4b0a-89b7-f857f19b3e19" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-license-and-license-file-fields"><code>license</code></a> — The package license.</li></ul><ul id="551c7700-a659-4a1b-b79e-178c458a8031" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-license-and-license-file-fields"><code>license-file</code></a> — Path to the text of the license.</li></ul><ul id="ebcec687-8408-420b-bfb2-b7670cf8866d" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-keywords-field"><code>keywords</code></a> — Keywords for the package.</li></ul><ul id="41d6feed-c40f-443d-957e-9ae5fb9a8bf1" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-categories-field"><code>categories</code></a> — Categories of the package.</li></ul><ul id="5f017c74-bace-44c6-866a-6a90e1ba4823" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-workspace-field"><code>workspace</code></a> — Path to the workspace for the package.</li></ul><ul id="b1bf4f28-6d0c-4caf-a5e2-4ec390e95310" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-build-field"><code>build</code></a> — Path to the package build script.</li></ul><ul id="55b6558f-c06e-4da4-8d2f-3fb7006e5397" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-links-field"><code>links</code></a> — Name of the native library the package links with.</li></ul><ul id="fd7aba39-c349-48aa-8354-2883989aab9d" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-exclude-and-include-fields"><code>exclude</code></a> — Files to exclude when publishing.</li></ul><ul id="3cddfb1b-4c1a-43c1-b826-675d532b8365" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-exclude-and-include-fields"><code>include</code></a> — Files to include when publishing.</li></ul><ul id="0f54a7cd-41c8-41a0-8048-1ed7fd224c48" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-publish-field"><code>publish</code></a> — Can be used to prevent publishing the package.</li></ul><ul id="4a2992c4-4d46-4b3a-9ca0-7457d83630a8" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-metadata-table"><code>metadata</code></a> — Extra settings for external tools.</li></ul><ul id="31ffca4c-058e-4bd3-a381-418c3d05e183" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-default-run-field"><code>default-run</code></a> — The default binary to run by <a href="https://doc.rust-lang.org/cargo/commands/cargo-run.html"><code>cargo run</code></a>.</li></ul><ul id="77d60b89-faa3-40d2-9d6c-157ebcad0535" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/cargo-targets.html#target-auto-discovery"><code>autobins</code></a> — Disables binary auto discovery.</li></ul><ul id="bb11036d-46cb-467d-8f25-a9ebd710ee55" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/cargo-targets.html#target-auto-discovery"><code>autoexamples</code></a> — Disables example auto discovery.</li></ul><ul id="fe344e12-133f-476d-9c29-80d17908de94" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/cargo-targets.html#target-auto-discovery"><code>autotests</code></a> — Disables test auto discovery.</li></ul><ul id="b285cabe-e480-42c0-916a-2a1019ac41ea" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/cargo-targets.html#target-auto-discovery"><code>autobenches</code></a> — Disables bench auto discovery.</li></ul><ul id="e3b668e9-29a0-4de1-81c5-1aef99119cb1" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/resolver.html#resolver-versions"><code>resolver</code></a> — Sets the dependency resolver to use.</li></ul></li></ul><ul id="78104595-5032-4df9-b08a-d0a5aa4aa01c" class="bulleted-list"><li>Target tables: (see <a href="https://doc.rust-lang.org/cargo/reference/cargo-targets.html#configuring-a-target">configuration</a> for settings)<ul id="746d8122-eae0-464f-bfab-8dfb6bce1bf8" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/cargo-targets.html#library"><code>[lib]</code></a> — Library target settings.</li></ul><ul id="d1b25d41-51e4-4667-bf87-6ef4f59b432c" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/cargo-targets.html#binaries"><code>[[bin]]</code></a> — Binary target settings.</li></ul><ul id="f08aedbe-174a-4a5e-93e5-84a4e4ddd7fd" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/cargo-targets.html#examples"><code>[[example]]</code></a> — Example target settings.</li></ul><ul id="50a12026-4c4e-4874-bc46-e40dc63ba23b" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/cargo-targets.html#tests"><code>[[test]]</code></a> — Test target settings.</li></ul><ul id="225f4762-6b37-4b2d-a85a-af355b38c598" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/cargo-targets.html#benchmarks"><code>[[bench]]</code></a> — Benchmark target settings.</li></ul></li></ul><ul id="7ca90902-1ae3-4359-95c9-0ddb72a74386" class="bulleted-list"><li>Dependency tables:<ul id="1ae018d3-2ca5-4021-ac07-60b01723e472" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html"><code>[dependencies]</code></a> — Package library dependencies.</li></ul><ul id="43bf92e9-2b07-44e7-b14b-2c66423935ff" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#development-dependencies"><code>[dev-dependencies]</code></a> — Dependencies for examples, tests, and benchmarks.</li></ul><ul id="a29b282b-83b0-45c3-8d28-aadb05c352c7" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#build-dependencies"><code>[build-dependencies]</code></a> — Dependencies for build scripts.</li></ul><ul id="a8e563b9-ccff-4119-9cca-3a4fd06b29c8" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/specifying-dependencies.html#platform-specific-dependencies"><code>[target]</code></a> — Platform-specific dependencies.</li></ul></li></ul><ul id="158c159f-a19b-43ad-aa7f-68fe9afe0f8a" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/manifest.html#the-badges-section"><code>[badges]</code></a> — Badges to display on a registry.</li></ul><ul id="626c8424-595a-4051-96f8-029b6f7d7298" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/features.html"><code>[features]</code></a> — Conditional compilation features.</li></ul><ul id="b45e1576-a32f-4489-844c-c00ab247e839" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/overriding-dependencies.html#the-patch-section"><code>[patch]</code></a> — Override dependencies.</li></ul><ul id="1d10845f-c2f8-4a78-bad8-3cdc30d55ca8" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/overriding-dependencies.html#the-replace-section"><code>[replace]</code></a> — Override dependencies (deprecated).</li></ul><ul id="6a4a4b29-aa45-49a7-abbd-90fc694a8c41" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/profiles.html"><code>[profile]</code></a> — Compiler settings and optimizations.</li></ul><ul id="7d217372-f5d2-44a4-abf5-386e96d2bbb2" class="bulleted-list"><li><a href="https://doc.rust-lang.org/cargo/reference/workspaces.html"><code>[workspace]</code></a> — The workspace definition.</li></ul><h2 id="a41fc17a-d4e2-4001-bbe9-8ae94b48d393" class="">2) Manage a package &amp; modules</h2><p id="0899c543-dc60-4c6a-8894-8b365a7c7322" class="">각 모듈안의 함수들은 각각 <code>pub</code>를 붙여줘야 외부로 노출됨</p><p id="af04c554-814a-4b86-8d89-7cf915b90a22" class=""><code>struct</code>는 각 field별로 따로 pub 지정해줘야 함.</p><p id="4120a594-4742-4322-ac26-c79f2754abf9" class=""><code>enum</code>은 <code>pub</code>하면 이것의 variants도 모두 공개됨.</p><p id="8309c15f-c99e-4a02-9926-eb3e240df999" class=""><code>pub use</code> 하면 re-export로 외부에서도 해당 경로로 접근 가능</p><pre id="2160cbd5-8b49-467c-bf09-0c44d03102b2" class="code"><code>// src/lib.rs
+
+use crate::front_of_house::hosting;
+use self::back_of_house as MyWorkspace;
+
+mod front_of_house {
+    pub mod hosting {
+        pub fn add_to_waitlist() {}
+        fn seat_at_table() {}
+    }
+
+    mod serving {
+        fn take_order() {}
+        fn serve_order() {}
+        fn take_payment() {}
+    }
+}
+
+fn serve_order() {}
+
+mod back_of_house {
+    fn fix_incorrect_order() {
+        cook_order();
+        super::serve_order();
+    }
+
+    fn cook_order() {}
+
+	  pub enum Appetizer {
+	          Soup,
+	          Salad,
+	      }
+
+    pub struct Breakfast {
+            pub toast: String,
+            seasonal_fruit: String,
+        }
+
+    impl Breakfast {
+        pub fn summer(toast: &amp;str) -&gt; Breakfast {
+            Breakfast {
+                toast: String::from(toast),
+                seasonal_fruit: String::from(&quot;peaches&quot;),
+            }
+        }
+    }
+}
+
+pub fn eat_at_restaurant() {
+    // Absolute path
+    crate::front_of_house::hosting::add_to_waitlist();
+
+    // Relative path
+    front_of_house::hosting::add_to_waitlist();
+
+    let order1 = back_of_house::Appetizer::Soup;
+    let order2 = back_of_house::Appetizer::Salad;
+
+    let mut meal = back_of_house::Breakfast::summer(&quot;Rye&quot;);
+    meal.toast = String::from(&quot;Wheat&quot;);
+    println!(&quot;I&#x27;d like {} toast please&quot;, meal.toast);
+
+    // meal.seasonal_fruit = String::from(&quot;blueberries&quot;);
+}</code></pre><figure id="28575c8a-a414-468f-b0f6-6cbda56c26a4"><a href="https://github.com/tkxkd0159/rust/tree/main/workspace_test" class="bookmark source"><div class="bookmark-info"><div class="bookmark-text"><div class="bookmark-title">tkxkd0159/rust</div><div class="bookmark-description">Start to learn Rust. Contribute to tkxkd0159/rust development by creating an account on GitHub.</div></div><div class="bookmark-href"><img src="https://github.com/favicon.ico" class="icon bookmark-icon"/>https://github.com/tkxkd0159/rust/tree/main/workspace_test</div></div><img src="https://opengraph.githubassets.com/e4d8bfa4f84c32699169c224e605740664008174dbd2a0693db11a166d4c9204/tkxkd0159/rust" class="bookmark-image"/></a></figure><h1 id="8d925248-815b-41ee-9d52-4d76692f2ede" class="">Style guide</h1><figure id="a6376cce-61a2-4616-a4b7-cb70bcd9e4f1" class="image"><a href="Rust%204b93dce58ec64d1ca7714b5d6174d638/Untitled%203.png"><img style="width:926px" src="Rust%204b93dce58ec64d1ca7714b5d6174d638/Untitled%203.png"/></a></figure><p id="0dfd37b4-186f-4028-94a0-07d5f31abbec" class="">In <code>CamelCase</code>, acronyms count as one word: use <code>Uuid</code> rather than <code>UUID</code>. In <code>snake_case</code>, acronyms are lower-cased: <code>is_xid_start</code>.</p><p id="58a1e58c-9d0b-4157-b44a-f9387c2c9a74" class="">In <code>snake_case</code> or <code>SCREAMING_SNAKE_CASE</code>, a &quot;word&quot; should never consist of a single letter unless it is the last &quot;word&quot;. So, we have <code>btree_map</code> rather than <code>b_tree_map</code>, but <code>PI_2</code> rather than <code>PI2</code>.</p><p id="e0d90338-9fa4-4192-9382-43a97a81874f" class="">
+</p><div id="8d1d9fe1-1a54-4fd1-bde9-bf35c90672b0" class="column-list"><div id="d115c60e-23be-4022-a177-8607af2161b5" style="width:50%" class="column"><figure id="076d6525-0433-4ef5-bf1b-442f987edaac" class="image"><a href="Rust%204b93dce58ec64d1ca7714b5d6174d638/Untitled%204.png"><img style="width:338px" src="Rust%204b93dce58ec64d1ca7714b5d6174d638/Untitled%204.png"/></a></figure></div><div id="ec8dd810-bbe1-4a3c-b457-d866bd9bace6" style="width:50%" class="column"><figure id="0d61f0ab-2eae-4d77-90b8-b14180227743" class="image"><a href="Rust%204b93dce58ec64d1ca7714b5d6174d638/Untitled%205.png"><img style="width:361px" src="Rust%204b93dce58ec64d1ca7714b5d6174d638/Untitled%205.png"/></a></figure></div></div></div></article></body></html>
