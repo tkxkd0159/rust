@@ -14,7 +14,7 @@ fn construct_headers() -> HeaderMap {
     headers
 }
 
-fn construct_body(method: &'static str) -> Value {
+fn construct_body(method: &str) -> Value {
     let map = json!({
         "jsonrpc": "1.0",
         "id": "curltest",
