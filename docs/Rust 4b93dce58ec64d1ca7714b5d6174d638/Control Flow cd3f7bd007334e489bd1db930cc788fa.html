@@ -625,7 +625,7 @@ blockquote {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
-</style></head><body><article id="cd3f7bd0-0733-4e48-9bd1-db930cc788fa" class="page sans"><header><h1 class="page-title">Control Flow</h1></header><div class="page-body"><nav id="16c93429-27a6-4f72-b6b3-259fe85f4dbf" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c3befce4-080d-497e-9b63-cb0d3391e092">If</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#179d493b-ad8e-442d-9844-ccb9e4b49a1a">Repetition with Loops</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3d7fb54b-9540-4f4c-b53a-1e15cbbb975e">1) loop</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b95289c3-952a-4c31-9d0b-a3bbd3ed97b9">2) while</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fbd080b0-6582-4eee-bace-b0eb4e4b1fd0">3) for</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8ad2f0ab-8691-440b-b553-384e0673534f">Match</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ea8b63d5-a0d4-4f5c-8ab7-7c6ebfee0ca5">1) <code>_</code> placeholder</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#214b315b-1dc8-4c81-a7d2-b10dc990dbca">2) Matching with Option&lt;T&gt;</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#dfd92e31-f79e-4d41-bc13-81001ab7effa">3) if let VS match</a></div></nav><h1 id="c3befce4-080d-497e-9b63-cb0d3391e092" class="">If</h1><pre id="b63bd0c2-9103-4149-891a-c52d4c1b3c81" class="code"><code>fn main() {
+</style></head><body><article id="cd3f7bd0-0733-4e48-9bd1-db930cc788fa" class="page sans"><header><h1 class="page-title">Control Flow</h1></header><div class="page-body"><nav id="16c93429-27a6-4f72-b6b3-259fe85f4dbf" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#c3befce4-080d-497e-9b63-cb0d3391e092">If</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#179d493b-ad8e-442d-9844-ccb9e4b49a1a">Repetition with Loops</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#3d7fb54b-9540-4f4c-b53a-1e15cbbb975e">1) loop</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b95289c3-952a-4c31-9d0b-a3bbd3ed97b9">2) while</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#fbd080b0-6582-4eee-bace-b0eb4e4b1fd0">3) for</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#8ad2f0ab-8691-440b-b553-384e0673534f">Match</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#ea8b63d5-a0d4-4f5c-8ab7-7c6ebfee0ca5">1) <code>_</code> placeholder</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#dfd92e31-f79e-4d41-bc13-81001ab7effa">2) if let VS match</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#d0af30e6-ce98-4531-a551-cd104a214e95">3) Pattern Syntax</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#4c1152f0-2671-4fdb-9e47-bc1ebdcdd26e">3-1) Matching with Option&lt;T&gt;</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#a59a90fd-2a0b-4621-981b-97139b4e67d9">3-2) Matching Named Variables</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1f2533ba-7454-4269-b5bc-6d85d8f21066">3-3) Multiple Patterns</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#1f69d0d3-bb53-4581-804d-77f64177c250">3-4) Destructuring to Break Apart Values</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#8f71013a-5d01-4e5e-bcb7-dc3eee476526">3-5) Using an underscore to not bind the value</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#73ce123d-d1c3-4d85-ba4b-972e18135a4e">3-6) Ignoring Remaining Parts of a Value with ..</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#884d70bc-95a3-4a4e-954d-62f7d4ebbe8d">3-7) Extra Conditionals with Match Guards</a></div><div class="table_of_contents-item table_of_contents-indent-2"><a class="table_of_contents-link" href="#d19f5e61-3276-4944-b173-79e398a582af">3-8) @ Bindings (at)</a></div></nav><h1 id="c3befce4-080d-497e-9b63-cb0d3391e092" class="">If</h1><pre id="b63bd0c2-9103-4149-891a-c52d4c1b3c81" class="code"><code>fn main() {
     let number = 6;
 
     if number % 4 == 0 {
@@ -676,18 +676,7 @@ blockquote {
         7 =&gt; println!(&quot;seven&quot;),
         _ =&gt; (),
     }
-}</code></pre><h2 id="214b315b-1dc8-4c81-a7d2-b10dc990dbca" class="">2) Matching with Option&lt;T&gt;</h2><p id="6d1a4509-e7c1-480d-a005-db9793ea3c4e" class=""><code>Option</code>은 2개의 variant로 구성되어 있음으로 <code>_</code> 처리 필요없음</p><pre id="8605e8fc-5b84-4da7-8515-4c8e503345e8" class="code"><code>fn main() {
-    fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
-        match x {
-            None =&gt; None,
-            Some(i) =&gt; Some(i + 1),
-        }
-    }
-
-    let five = Some(5);
-    let six = plus_one(five);
-    let none = plus_one(None);
-}</code></pre><h2 id="dfd92e31-f79e-4d41-bc13-81001ab7effa" class="">3) if let VS match</h2><p id="e6e2dec2-0df5-4f9b-a5e9-983e672c626f" class=""><code>if let</code>의 경우 <code>match</code>처럼 모든 케이스를 커버하지 않아도 됨.
+}</code></pre><h2 id="dfd92e31-f79e-4d41-bc13-81001ab7effa" class="">2) if let VS match</h2><p id="e6e2dec2-0df5-4f9b-a5e9-983e672c626f" class=""><code>if let</code>의 경우 <code>match</code>처럼 모든 케이스를 커버하지 않아도 됨.
 일반적으로 하나의 케이스 매칭을 다룰 때 <code>if let</code> 사용</p><pre id="5be49ea4-3cec-4096-b4ec-06f743d71a96" class="code"><code>fn main() {
     let number = Some(7);
     let letter: Option&lt;i32&gt; = None;
@@ -717,4 +706,190 @@ blockquote {
     match coin {
         Coin::Quarter(state) =&gt; println!(&quot;State quarter from {:?}!&quot;, state),
         _ =&gt; count += 1,
-    }</code></pre></div></article></body></html>
+    }</code></pre><h2 id="d0af30e6-ce98-4531-a551-cd104a214e95" class="">3) Pattern Syntax</h2><h3 id="4c1152f0-2671-4fdb-9e47-bc1ebdcdd26e" class="">3-1) Matching with Option&lt;T&gt;</h3><p id="f1fe609f-2e4d-4b1e-82a6-7537e90d2e78" class=""><code>Option</code>은 2개의 variant로 구성되어 있음으로 <code>_</code> 처리 필요없음</p><pre id="d98d7953-60b0-40fe-8a82-e2159a77e7cf" class="code"><code>fn main() {
+    fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
+        match x {
+            None =&gt; None,
+            Some(i) =&gt; Some(i + 1),
+        }
+    }
+
+    let five = Some(5);
+    let six = plus_one(five);
+    let none = plus_one(None);
+}</code></pre><p id="2c94407d-31bf-4d49-b06c-cab40be32d50" class="">
+</p><h3 id="a59a90fd-2a0b-4621-981b-97139b4e67d9" class="">3-2) Matching Named Variables</h3><pre id="5d18aa4a-f0d7-447f-9890-6c33ccaf1415" class="code"><code>let x = Some(5);
+    let y = 10;
+
+    match x {
+        Some(50) =&gt; println!(&quot;Got 50&quot;),
+        Some(y) =&gt; println!(&quot;Matched, y = {:?}&quot;, y),   // 5
+        _ =&gt; println!(&quot;Default case, x = {:?}&quot;, x),
+    }
+
+    println!(&quot;at the end: x = {:?}, y = {:?}&quot;, x, y);  // Some(5), 10</code></pre><h3 id="1f2533ba-7454-4269-b5bc-6d85d8f21066" class="">3-3) Multiple Patterns</h3><pre id="78d69286-3e31-451f-8a54-4080b986b28b" class="code"><code>let x = 1;
+
+    match x {
+        1 | 2 =&gt; println!(&quot;one or two&quot;),
+        3 =&gt; println!(&quot;three&quot;),
+        _ =&gt; println!(&quot;anything&quot;),
+    }</code></pre><pre id="4ad7aa27-6969-4457-9402-ec480b22620b" class="code"><code>let x = 5;
+
+    match x {
+        1..=5 =&gt; println!(&quot;one through five&quot;),
+        _ =&gt; println!(&quot;something else&quot;),
+    }</code></pre><pre id="1e4d00c6-9343-42d7-89de-abedb0e721db" class="code"><code>let x = &#x27;c&#x27;;
+
+    match x {
+        &#x27;a&#x27;..=&#x27;j&#x27; =&gt; println!(&quot;early ASCII letter&quot;),
+        &#x27;k&#x27;..=&#x27;z&#x27; =&gt; println!(&quot;late ASCII letter&quot;),
+        _ =&gt; println!(&quot;something else&quot;),
+    }</code></pre><h3 id="1f69d0d3-bb53-4581-804d-77f64177c250" class="">3-4) Destructuring to Break Apart Values</h3><pre id="326f2936-ffb1-42d1-bc51-fa7ae49e042a" class="code"><code>fn main() {
+    let p = Point { x: 0, y: 7 };
+
+    match p {
+        Point { x, y: 0 } =&gt; println!(&quot;On the x axis at {}&quot;, x),
+        Point { x: 0, y } =&gt; println!(&quot;On the y axis at {}&quot;, y),
+        Point { x, y } =&gt; println!(&quot;On neither axis: ({}, {})&quot;, x, y),
+    }
+}</code></pre><pre id="10794295-944f-4314-8fac-2e5e73ccb74f" class="code"><code>enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+
+fn main() {
+    let msg = Message::ChangeColor(0, 160, 255);
+
+    match msg {
+        Message::Quit =&gt; {
+            println!(&quot;The Quit variant has no data to destructure.&quot;)
+        }
+        Message::Move { x, y } =&gt; {
+            println!(
+                &quot;Move in the x direction {} and in the y direction {}&quot;,
+                x, y
+            );
+        }
+        Message::Write(text) =&gt; println!(&quot;Text message: {}&quot;, text),
+        Message::ChangeColor(r, g, b) =&gt; println!(
+            &quot;Change the color to red {}, green {}, and blue {}&quot;,
+            r, g, b
+        ),
+    }
+}</code></pre><pre id="4294305b-1709-4677-8120-a3ff77b6ae53" class="code"><code>enum Color {
+    Rgb(i32, i32, i32),
+    Hsv(i32, i32, i32),
+}
+
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(Color),
+}
+
+fn main() {
+    let msg = Message::ChangeColor(Color::Hsv(0, 160, 255));
+
+    match msg {
+        Message::ChangeColor(Color::Rgb(r, g, b)) =&gt; println!(
+            &quot;Change the color to red {}, green {}, and blue {}&quot;,
+            r, g, b
+        ),
+        Message::ChangeColor(Color::Hsv(h, s, v)) =&gt; println!(
+            &quot;Change the color to hue {}, saturation {}, and value {}&quot;,
+            h, s, v
+        ),
+        _ =&gt; (),
+    }
+}</code></pre><h3 id="8f71013a-5d01-4e5e-bcb7-dc3eee476526" class="">3-5) Using an underscore to not bind the value</h3><p id="e173977b-0a94-404c-bbe1-3063a8d7d068" class=""><code>Some(&lt;param&gt;)</code>을 하면 param에 s의 Some 내부 값이 move 해서 s 사용 불가. 따라서 <code>_</code> 필요
+Copy trait 구현된 타입은 필요 없음.</p><pre id="09875d3b-daa9-4e81-9f6e-69e143f733c7" class="code"><code>fn main() {
+    let s = Some(String::from(&quot;Hello!&quot;));
+
+    if let Some(_) = s {
+        println!(&quot;found a string&quot;);
+    }
+
+    println!(&quot;{:?}&quot;, s);
+}</code></pre><h3 id="73ce123d-d1c3-4d85-ba4b-972e18135a4e" class="">3-6) Ignoring Remaining Parts of a Value with ..</h3><pre id="fad508fd-891b-473b-a8b0-0a3ccc747274" class="code"><code>struct Point {
+        x: i32,
+        y: i32,
+        z: i32,
+    }
+
+    let origin = Point { x: 0, y: 0, z: 0 };
+
+    match origin {
+        Point { x, .. } =&gt; println!(&quot;x is {}&quot;, x),
+    }</code></pre><pre id="eec17303-4372-4030-92ab-652b4aa2ba55" class="code"><code>fn main() {
+    let numbers = (2, 4, 8, 16, 32);
+
+    match numbers {
+        (first, .., last) =&gt; {
+            println!(&quot;Some numbers: {}, {}&quot;, first, last);
+        }
+    }
+}</code></pre><h3 id="884d70bc-95a3-4a4e-954d-62f7d4ebbe8d" class="">3-7) Extra Conditionals with Match Guards</h3><p id="aff9baa2-f6a5-4391-a87a-2fa79da39ad5" class="">A <em>match guard</em> is an additional <code>if</code> condition specified after the pattern in a match arm</p><pre id="79a56b44-9cde-446c-ae32-d7a66af915c2" class="code"><code>let num = Some(4);
+
+    match num {
+        Some(x) if x &lt; 5 =&gt; println!(&quot;less than five: {}&quot;, x),
+        Some(x) =&gt; println!(&quot;{}&quot;, x),
+        None =&gt; (),
+    }</code></pre><pre id="f4c9c228-f41f-4f40-a173-a99406aff76b" class="code"><code>fn main() {
+    let x = Some(5);
+    let y = 5;
+
+    match x {
+        Some(50) =&gt; println!(&quot;Got 50&quot;),
+        Some(n) if n == y =&gt; println!(&quot;Matched, n = {}&quot;, n),
+        _ =&gt; println!(&quot;Default case, x = {:?}&quot;, x),
+    }
+
+    println!(&quot;at the end: x = {:?}, y = {}&quot;, x, y);
+}</code></pre><pre id="87b360e6-3fc4-42db-a5ef-7553a5282957" class="code"><code>fn main() {
+    let x = 4;
+    let y = false;
+
+    match x {
+        4 | 5 | 6 if !y =&gt; println!(&quot;yes&quot;),
+        _ =&gt; println!(&quot;no&quot;),
+    }
+}</code></pre><h3 id="d19f5e61-3276-4944-b173-79e398a582af" class="">3-8) @ Bindings (at)</h3><p id="6fa424af-b735-4b67-ad7a-c71eb517ab9a" class="">The <code>@</code> operator lets us create a variable that holds a value at the same time we’re testing that value to see whether it matches a pattern.</p><pre id="46fcb19a-5d3a-418a-84a0-fcb25cc4822f" class="code"><code>fn main() {
+    enum Message {
+        Hello { id: i32 },
+    }
+
+    let msg = Message::Hello { id: 5 };
+
+    match msg {
+        Message::Hello {
+            id: id_variable @ 3..=7,
+        } =&gt; println!(&quot;Found an id in range: {}&quot;, id_variable),
+        Message::Hello { id: 10..=12 } =&gt; {
+            println!(&quot;Found an id in another range&quot;)
+        }
+        Message::Hello { id } =&gt; println!(&quot;Found some other id: {}&quot;, id),
+    }
+
+		let x = Some(5);
+    let y = 8;
+		match x {
+		        Some(50) =&gt; println!(&quot;Got 50&quot;),
+		        Some(n @ 5..=10) if n == y =&gt; println!(&quot;Matched, n = {}&quot;, n),
+		        _ =&gt; println!(&quot;Default case, x = {:?}&quot;, x),
+		    }
+
+		fn age() -&gt; u32 {
+		    15
+		}
+		match age() {
+		       0             =&gt; println!(&quot;I haven&#x27;t celebrated my first birthday yet&quot;),
+	        n @ 1  ..= 12 =&gt; println!(&quot;I&#x27;m a child of age {:?}&quot;, n),
+	        n @ 13 ..= 19 =&gt; println!(&quot;I&#x27;m a teen of age {:?}&quot;, n),
+	        n             =&gt; println!(&quot;I&#x27;m an old person of age {:?}&quot;, n),
+    }
+}
+</code></pre><p id="5a549000-f77a-4f45-81d7-b1c17a1b9c9b" class="">
+</p></div></article></body></html>

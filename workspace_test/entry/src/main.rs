@@ -1,13 +1,19 @@
-#![allow(unused)]
-
-
-use restaurant::{self, front_of_house::hosting};
+use std::fs::File;
+use std::io::ErrorKind;
 
 fn main() {
-    let x = chrono::Utc::now();
-    println!("{}", x);
+    let f = File::open("hello.txt");
 
-    hosting::add_to_waitlist();
-    restaurant::eat_at_restaurant();
-
+    let _f = match f {
+        Ok(file) => file,
+        Err(error) => match error.kind() {
+            ErrorKind::NotFound => match File::create("hello.txt") {
+                Ok(fc) => fc,
+                Err(e) => panic!("Problem creating the file: {:?}", e),
+            },
+            other_error => {
+                panic!("Problem opening the file: {:?}", other_error)
+            }
+        },
+    };
 }

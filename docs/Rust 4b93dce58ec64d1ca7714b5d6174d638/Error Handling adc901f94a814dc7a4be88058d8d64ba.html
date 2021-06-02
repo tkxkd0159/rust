@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Generics, Trait, Lifetime</title><style>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Error Handling</title><style>
 /* cspell:disable-file */
 /* webkit printing magic: print all background colors */
 html {
@@ -625,55 +625,37 @@ blockquote {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
-</style></head><body><article id="881d3a0f-bc08-41ee-b080-69f23c04017f" class="page sans"><header><h1 class="page-title">Generics, Trait, Lifetime</h1></header><div class="page-body"><nav id="a2310573-ea89-4bf9-8fc5-2af78554937d" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#1b6252d5-9127-4403-b870-0ed51ef5efb4">Generics</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ca7a6cf6-57f6-4c94-98f8-a5dbab839701">Trait</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6a83a722-7286-4e97-885f-fd275564d4e0">Bounds</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f26b4073-a85e-488e-a424-c73701cc77e6">Lifetime</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#991bd232-cc43-4159-843d-0c432fb4c24a">1) Static</a></div></nav><h1 id="1b6252d5-9127-4403-b870-0ed51ef5efb4" class="">Generics</h1><p id="c34ca9cd-ea7c-4346-8113-1b8fc0b2a99e" class="">Generics are abstract stand-ins for concrete types or other properties.</p><h1 id="ca7a6cf6-57f6-4c94-98f8-a5dbab839701" class="">Trait</h1><p id="158add1e-5817-43e3-b51f-984ed24db8ca" class="">다른 언어에서 <em>interface</em>랑 비슷한 역할을 하는 것. 즉, type 사이 공유가능한 행위 정의</p><p id="1f6e4313-bacd-44f0-8b75-4a7579b99247" class="">A <em>trait </em>tells the Rust compiler about functionality a particular type has and can share with other types. We can use traits<strong> to define shared behavior in an abstract way.</strong> We can use trait bounds to specify that a generic can be any type that has certain behavior.</p><h1 id="6a83a722-7286-4e97-885f-fd275564d4e0" class="">Bounds</h1><p id="1fd2c1cf-9c81-4546-a829-03e611c07ff6" class=""><code>Where</code> clauses provide another way to specify bounds on type and lifetime parameters as well as a way to specify bounds on types that aren&#x27;t type parameters.</p><pre id="2c96251b-3c5e-4cf9-893b-57802dc02d12" class="code"><code>impl &lt;A, D&gt; MyTrait&lt;A, D&gt; for YourType where
-    A: TraitB + TraitC,
-    D: TraitE + TraitF {}</code></pre><ul id="c782e0b2-3329-499e-8ce0-49db14e20e68" class="bulleted-list"><li>Generic parameter
-<code>fn f&lt;A: Copy&gt;() {}</code>  ↔ <code>fn f&lt;A&gt; where A: Copy () {}</code></li></ul><ul id="23757db4-b6ca-4a79-8096-13a9659a50a9" class="bulleted-list"><li>Supertraits
-<code>trait Circle : Shape {}</code> ↔ <code>trait Circle where Self : Shape {}</code>
-</li></ul><pre id="906fe871-1755-497e-8509-771b1a70ca24" class="code"><code>trait Shape { fn area(&amp;self) -&gt; f64; }
-trait Circle : Shape { fn radius(&amp;self) -&gt; f64; }</code></pre><ul id="bced57a8-0e07-4ff9-9b1c-20172e5b67ab" class="bulleted-list"><li>Associated types
-<code>trait A { type B: Copy; }</code> ↔ <code>trait A where Self::B: Copy { type B; }</code></li></ul><h1 id="f26b4073-a85e-488e-a424-c73701cc77e6" class="">Lifetime</h1><figure id="096b4eed-ee65-4c65-868a-5ef1080ca7c5" class="image"><a href="Generics,%20Trait,%20Lifetime%20881d3a0fbc0841eeb08069f23c04017f/Untitled.png"><img style="width:288px" src="Generics,%20Trait,%20Lifetime%20881d3a0fbc0841eeb08069f23c04017f/Untitled.png"/></a></figure><p id="1f0a8f45-1d9a-4197-a8c5-9a7bdc60a6d7" class="">a variable&#x27;s <strong>lifetime</strong> begins when it is created and ends when it is destroyed</p><pre id="6abcf02b-428b-453a-9e74-c6cf45d326cb" class="code"><code>fn main() {
-    let i = 3; // Lifetime for `i` starts. ────────────────┐
-    //                                                     │
-    { //                                                   │
-        let borrow1 = &amp;i; // `borrow1` lifetime starts. ──┐│
-        //                                                ││
-        println!(&quot;borrow1: {}&quot;, borrow1); //              ││
-    } // `borrow1 ends. ──────────────────────────────────┘│
-    //                                                     │
-    //                                                     │
-    { //                                                   │
-        let borrow2 = &amp;i; // `borrow2` lifetime starts. ──┐│
-        //                                                ││
-        println!(&quot;borrow2: {}&quot;, borrow2); //              ││
-    } // `borrow2` ends. ─────────────────────────────────┘│
-    //                                                     │
-}   // Lifetime ends. ─────────────────────────────────────┘</code></pre><p id="4486b65a-00fa-4a7a-90e8-01ad21e7e476" class="">
-</p><pre id="74b3c03b-f62b-4c9b-a2e6-0eb8e5e28328" class="code"><code>foo&lt;&#x27;a, &#x27;b&gt;
-// `foo` has lifetime parameters `&#x27;a` and `&#x27;b`
-// the lifetime of foo cannot exceed that of either &#x27;a or &#x27;b.</code></pre><h2 id="991bd232-cc43-4159-843d-0c432fb4c24a" class="">1) Static</h2><p id="68c52ef8-043a-4060-9220-9ab27b6922fa" class="">As a reference lifetime <code>&#x27;static</code> indicates that the data pointed to by the reference lives for the entire lifetime of the running program. It can still be coerced to a shorter lifetime.</p><pre id="f7103257-aac8-4959-900b-7485bcfd8967" class="code"><code>static NUM: i32 = 18;
+</style></head><body><article id="adc901f9-4a81-4dc7-a4be-88058d8d64ba" class="page sans"><header><h1 class="page-title">Error Handling</h1></header><div class="page-body"><nav id="8ff52dab-5f11-4304-8ed2-d540f964ef0b" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6448ab4b-2f4a-4cb0-9fcd-b4ae64f9f961">Unrecoverable Errors with panic!</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#b18488b2-3704-4622-86bf-1f4ef1759345">Unwinding the Stack or Aborting in Response to a Panic</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#4f315f4a-9780-4fef-b72e-bde87a8a210b">Simple panic</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#e1c10dfd-0847-4f40-b8c5-87f23d263277">Using a panic! Backtrace</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#3e43e335-11e3-49b5-ae57-9228910046cb">Recoverable Errors with Result</a></div></nav><p id="7efd4cf2-5e2b-4b00-a4df-93750ee5d45f" class="">대부분의 언어는 에러 처리를 Exception으로 퉁치지만 Rust는 2가지 종류의 에러가 있다.</p><p id="a883be04-bc98-4492-a9eb-a13697e76fda" class="">
+</p><ul id="5aa6a761-bd51-4c21-93f1-bdba812170e0" class="bulleted-list"><li><strong>Recoverable Error
+</strong>such as a <code>file not found error</code>, it’s reasonable to report the problem to the user and retry the operation.
+<code>Result&lt;T, E&gt;</code></li></ul><ul id="be297bdd-2ef5-42e6-b39c-d7f71a5bacad" class="bulleted-list"><li><strong>Unrecoverable Error
+</strong>Unrecoverable errors are always symptoms of bugs, like trying to access a location beyond the end of an array.
+<code>panic!</code> macro : Stop execution when the program encounters unrecoverable error</li></ul><p id="f59b7e9e-d3d4-4c7b-bce2-cfb0407cad29" class="">
+</p><h1 id="6448ab4b-2f4a-4cb0-9fcd-b4ae64f9f961" class="">Unrecoverable Errors with panic!</h1><h3 id="b18488b2-3704-4622-86bf-1f4ef1759345" class="">Unwinding the Stack or Aborting in Response to a Panic</h3><p id="3eb49e5f-862a-4384-8347-7fd7d3456711" class="">원래는 패닉이 발생하면 Rust는 스택을 역순으로 순회하면서 각 함수에 전달되었던 데이터를 정리(<em>unwind</em>). 하지만 이 작업 양이 매우 클 수 있음. 따라서 스택을 정리하지 않고 즉시 종료(<em>abort</em>)하게 하려면 아래 옵션을 <code>Cargo.toml</code>에 추가</p><pre id="1294be5f-3a11-4979-8630-2d98a9b192e4" class="code"><code>[profile.release]
+panic = &#x27;abort&#x27;</code></pre><h2 id="4f315f4a-9780-4fef-b72e-bde87a8a210b" class="">Simple panic</h2><pre id="6eacef34-e117-4299-a4e6-1302396d4c9b" class="code"><code>fn main() {
+    panic!(&quot;crash and burn&quot;);
+}</code></pre><h2 id="e1c10dfd-0847-4f40-b8c5-87f23d263277" class="">Using a panic! Backtrace</h2><p id="77642c93-ed75-4ca1-a112-8f9e0305f60e" class="">유효하지 않은 인덱스를 이용해 벡터에 접근하려고 함. Rust는 이 때 <code>panic!</code>을 발생시키고 실행중단시킴. C같은 언어는 원치 않던 값이라도 개발자가 지정한 위치의 메모리에 저장된 값을 리턴.  이것을 <em>buffer overread</em>라 하는데 보안 취약점이 될 수 있음.</p><p id="f9861691-aa80-4826-bb97-727f42d14e7b" class="">환경변수 <code>RUST_BACKTRACE=1</code> 설정하면 backtrace 가능</p><pre id="566a69ba-e766-43be-b83a-022e31626892" class="code"><code>fn main() {
+    let v = vec![1, 2, 3];
 
-// Returns a reference to `NUM` where its `&#x27;static`
-// lifetime is coerced to that of the input argument.
-fn coerce_static&lt;&#x27;a&gt;(_: &amp;&#x27;a i32) -&gt; &amp;&#x27;a i32 {
-    &amp;NUM
-}
+    v[99];
+}</code></pre><h1 id="3e43e335-11e3-49b5-ae57-9228910046cb" class="">Recoverable Errors with Result</h1><p id="6e255cb7-fac8-42c0-bf9e-ea5b698eb271" class=""><code>file not found error</code> 같은 건 프로그램을 완전히 종료하지 않고 새 파일을 생성해줌으로써 해결할 수 있음. 이런 대처가능한 에러들을 <code>Result&lt;T, E&gt;</code>로 처리</p><p id="f2939510-9acf-4aa8-88f0-4a64e0b088ed" class="">
+</p><pre id="a34248a4-efd5-4289-983b-2f0e26305c63" class="code"><code>use std::fs::File;
+use std::io::ErrorKind;
 
 fn main() {
-    {
-        let static_string = &quot;I&#x27;m in read-only memory&quot;;
-        println!(&quot;static_string: {}&quot;, static_string);
+    let f = File::open(&quot;hello.txt&quot;);
 
-        // When `static_string` goes out of scope, the reference
-        // can no longer be used, but the data remains in the binary.
-    }
-
-    {
-        let lifetime_num = 9;
-        let coerced_static = coerce_static(&amp;lifetime_num);
-
-        println!(&quot;coerced_static: {}&quot;, coerced_static);   // 18
-    }
-
-    println!(&quot;NUM: {} stays accessible!&quot;, NUM);          // 18
-}</code></pre></div></article></body></html>
+    let f = match f {
+        Ok(file) =&gt; file,
+        Err(error) =&gt; match error.kind() {
+            ErrorKind::NotFound =&gt; match File::create(&quot;hello.txt&quot;) {
+                Ok(fc) =&gt; fc,
+                Err(e) =&gt; panic!(&quot;Problem creating the file: {:?}&quot;, e),
+            },
+            other_error =&gt; {
+                panic!(&quot;Problem opening the file: {:?}&quot;, other_error)
+            }
+        },
+    };
+}</code></pre><p id="dbee521a-9f86-42e0-92fb-217d7f038b0f" class="">
+</p></div></article></body></html>

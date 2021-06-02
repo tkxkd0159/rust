@@ -1,4 +1,4 @@
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Method Syntax</title><style>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Method, Generic type, Trait, Lifetime</title><style>
 /* cspell:disable-file */
 /* webkit printing magic: print all background colors */
 html {
@@ -625,7 +625,7 @@ blockquote {
 	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
 }
 	
-</style></head><body><article id="c90c030d-bc7d-488a-ab27-b06336e25a47" class="page sans"><header><h1 class="page-title">Method Syntax</h1></header><div class="page-body"><p id="74cd8bf8-7a42-430a-8780-9aea67c5050b" class=""><code>impl </code>안에서 <code>self</code>를 인자로 받지 않는 것은 method라 하지 않고 associated function이라 한다.</p><pre id="aebc11a9-c169-40d6-9ba5-6d8d6b7022fc" class="code"><code>struct Rectangle {
+</style></head><body><article id="881d3a0f-bc08-41ee-b080-69f23c04017f" class="page sans"><header><h1 class="page-title">Method, Generic type, Trait, Lifetime</h1></header><div class="page-body"><nav id="a2310573-ea89-4bf9-8fc5-2af78554937d" class="block-color-gray table_of_contents"><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#94e5fa49-332b-41ef-9491-5e93f182c48e">Method Syntax</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#191cdb8a-fc29-483f-b9c3-756f6e00526f">Generics</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#ca7a6cf6-57f6-4c94-98f8-a5dbab839701">Trait</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#6a83a722-7286-4e97-885f-fd275564d4e0">Bounds</a></div><div class="table_of_contents-item table_of_contents-indent-0"><a class="table_of_contents-link" href="#f26b4073-a85e-488e-a424-c73701cc77e6">Lifetime</a></div><div class="table_of_contents-item table_of_contents-indent-1"><a class="table_of_contents-link" href="#991bd232-cc43-4159-843d-0c432fb4c24a">1) Static</a></div></nav><h1 id="94e5fa49-332b-41ef-9491-5e93f182c48e" class="">Method Syntax</h1><p id="8146c63c-df79-42ef-8171-7bc396eb3179" class=""><code>impl </code>안에서 <code>self</code>를 인자로 받지 않는 것은 method라 하지 않고 associated function이라 한다.</p><pre id="d6145b79-1703-427c-8459-b9ed1f388be4" class="code"><code>struct Rectangle {
     width: u32,
     height: u32,
 }
@@ -664,7 +664,7 @@ fn main() {
     println!(&quot;Can rect1 hold rect2? {}&quot;, rect1.can_hold(&amp;rect2));
     println!(&quot;Can rect1 hold rect3? {}&quot;, rect1.can_hold(&amp;rect3));
     let sq = Rectangle::square(3);
-}</code></pre><pre id="70d2a7ab-0707-4415-a49a-0748fb45f88b" class="code"><code>fn main() {
+}</code></pre><pre id="eef728ed-1360-4651-ae36-2502c3c75f5f" class="code"><code>fn main() {
     enum Message {
         Quit,
         Move { x: i32, y: i32 },
@@ -680,4 +680,55 @@ fn main() {
 
     let m = Message::Write(String::from(&quot;hello&quot;));
     m.call();
+}</code></pre><h1 id="191cdb8a-fc29-483f-b9c3-756f6e00526f" class="">Generics</h1><p id="c34ca9cd-ea7c-4346-8113-1b8fc0b2a99e" class="">Generics are abstract stand-ins for concrete types or other properties.</p><h1 id="ca7a6cf6-57f6-4c94-98f8-a5dbab839701" class="">Trait</h1><p id="158add1e-5817-43e3-b51f-984ed24db8ca" class="">다른 언어에서 <em>interface</em>랑 비슷한 역할을 하는 것. 즉, type 사이 공유가능한 행위 정의</p><p id="1f6e4313-bacd-44f0-8b75-4a7579b99247" class="">A <em>trait </em>tells the Rust compiler about functionality a particular type has and can share with other types. We can use traits<strong> to define shared behavior in an abstract way.</strong> We can use trait bounds to specify that a generic can be any type that has certain behavior.</p><h1 id="6a83a722-7286-4e97-885f-fd275564d4e0" class="">Bounds</h1><p id="1fd2c1cf-9c81-4546-a829-03e611c07ff6" class=""><code>Where</code> clauses provide another way to specify bounds on type and lifetime parameters as well as a way to specify bounds on types that aren&#x27;t type parameters.</p><pre id="2c96251b-3c5e-4cf9-893b-57802dc02d12" class="code"><code>impl &lt;A, D&gt; MyTrait&lt;A, D&gt; for YourType where
+    A: TraitB + TraitC,
+    D: TraitE + TraitF {}</code></pre><ul id="c782e0b2-3329-499e-8ce0-49db14e20e68" class="bulleted-list"><li>Generic parameter
+<code>fn f&lt;A: Copy&gt;() {}</code>  ↔ <code>fn f&lt;A&gt; where A: Copy () {}</code></li></ul><ul id="23757db4-b6ca-4a79-8096-13a9659a50a9" class="bulleted-list"><li>Supertraits
+<code>trait Circle : Shape {}</code> ↔ <code>trait Circle where Self : Shape {}</code>
+</li></ul><pre id="906fe871-1755-497e-8509-771b1a70ca24" class="code"><code>trait Shape { fn area(&amp;self) -&gt; f64; }
+trait Circle : Shape { fn radius(&amp;self) -&gt; f64; }</code></pre><ul id="bced57a8-0e07-4ff9-9b1c-20172e5b67ab" class="bulleted-list"><li>Associated types
+<code>trait A { type B: Copy; }</code> ↔ <code>trait A where Self::B: Copy { type B; }</code></li></ul><h1 id="f26b4073-a85e-488e-a424-c73701cc77e6" class="">Lifetime</h1><figure id="096b4eed-ee65-4c65-868a-5ef1080ca7c5" class="image"><a href="Method,%20Generic%20type,%20Trait,%20Lifetime%20881d3a0fbc0841eeb08069f23c04017f/Untitled.png"><img style="width:288px" src="Method,%20Generic%20type,%20Trait,%20Lifetime%20881d3a0fbc0841eeb08069f23c04017f/Untitled.png"/></a></figure><p id="1f0a8f45-1d9a-4197-a8c5-9a7bdc60a6d7" class="">a variable&#x27;s <strong>lifetime</strong> begins when it is created and ends when it is destroyed</p><pre id="6abcf02b-428b-453a-9e74-c6cf45d326cb" class="code"><code>fn main() {
+    let i = 3; // Lifetime for `i` starts. ────────────────┐
+    //                                                     │
+    { //                                                   │
+        let borrow1 = &amp;i; // `borrow1` lifetime starts. ──┐│
+        //                                                ││
+        println!(&quot;borrow1: {}&quot;, borrow1); //              ││
+    } // `borrow1 ends. ──────────────────────────────────┘│
+    //                                                     │
+    //                                                     │
+    { //                                                   │
+        let borrow2 = &amp;i; // `borrow2` lifetime starts. ──┐│
+        //                                                ││
+        println!(&quot;borrow2: {}&quot;, borrow2); //              ││
+    } // `borrow2` ends. ─────────────────────────────────┘│
+    //                                                     │
+}   // Lifetime ends. ─────────────────────────────────────┘</code></pre><p id="4486b65a-00fa-4a7a-90e8-01ad21e7e476" class="">
+</p><pre id="74b3c03b-f62b-4c9b-a2e6-0eb8e5e28328" class="code"><code>foo&lt;&#x27;a, &#x27;b&gt;
+// `foo` has lifetime parameters `&#x27;a` and `&#x27;b`
+// the lifetime of foo cannot exceed that of either &#x27;a or &#x27;b.</code></pre><h2 id="991bd232-cc43-4159-843d-0c432fb4c24a" class="">1) Static</h2><p id="68c52ef8-043a-4060-9220-9ab27b6922fa" class="">As a reference lifetime <code>&#x27;static</code> indicates that the data pointed to by the reference lives for the entire lifetime of the running program. It can still be coerced to a shorter lifetime.</p><pre id="f7103257-aac8-4959-900b-7485bcfd8967" class="code"><code>static NUM: i32 = 18;
+
+// Returns a reference to `NUM` where its `&#x27;static`
+// lifetime is coerced to that of the input argument.
+fn coerce_static&lt;&#x27;a&gt;(_: &amp;&#x27;a i32) -&gt; &amp;&#x27;a i32 {
+    &amp;NUM
+}
+
+fn main() {
+    {
+        let static_string = &quot;I&#x27;m in read-only memory&quot;;
+        println!(&quot;static_string: {}&quot;, static_string);
+
+        // When `static_string` goes out of scope, the reference
+        // can no longer be used, but the data remains in the binary.
+    }
+
+    {
+        let lifetime_num = 9;
+        let coerced_static = coerce_static(&amp;lifetime_num);
+
+        println!(&quot;coerced_static: {}&quot;, coerced_static);   // 18
+    }
+
+    println!(&quot;NUM: {} stays accessible!&quot;, NUM);          // 18
 }</code></pre></div></article></body></html>
