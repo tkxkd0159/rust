@@ -10,7 +10,6 @@ use rand::{thread_rng, Rng};
 /// this is `front_of_house` module.
 pub mod front_of_house;
 
-
 /// Adds one to the number given.
 ///
 /// # Examples
@@ -28,4 +27,3 @@ pub fn eat_at_restaurant() {
     println!("{}", x);
     println!("{:?}", rng.gen::<(f64, bool)>());
 }
-
