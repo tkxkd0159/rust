@@ -7,6 +7,7 @@
 
 use rand::{thread_rng, Rng};
 
+
 /// this is `front_of_house` module.
 pub mod front_of_house;
 
@@ -26,4 +27,6 @@ pub fn eat_at_restaurant() {
     let x: f64 = rng.gen();
     println!("{}", x);
     println!("{:?}", rng.gen::<(f64, bool)>());
+    front_of_house::hosting::add_to_waitlist()
+    
 }
